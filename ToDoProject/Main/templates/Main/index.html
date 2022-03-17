@@ -1,0 +1,36 @@
+{% extends 'Main/base.html' %}
+{% load static %}
+{% block head %}
+    <script src="{% static 'Main/chart.js' %}"></script>
+{% endblock %}
+{% block content %}
+    <h3>Welcome {{ user.username.title }}!</h3>
+    <p>This is a very simple website to keep track of work/task you need to complete. Here you can keep record of what work/task you have to do and what you have completed, you can also specify time at which the work needed to be completed. So keep your work on PriorWork</p>
+    <canvas id="pie-chart" style="width:100%;max-width:600px"></canvas>
+    <script>
+        var xValues = ["Total", "Completed", "Not Completed"];
+        var yValues = [{{ total }}, {{ total_completed }}, {{ not_completed }}];
+        var barColors = [
+          "#00aba9",
+          "#1e7145",
+          "#b91d47",
+        ];
+        
+        new Chart("pie-chart", {
+          type: "pie",
+          data: {
+            labels: xValues,
+            datasets: [{
+              backgroundColor: barColors,
+              data: yValues
+            }]
+          },
+          options: {
+            title: {
+              display: true,
+              text: "Your Progress"
+            }
+          }
+        });
+        </script>
+{% endblock %}
